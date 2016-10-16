@@ -12,7 +12,8 @@ class MainWindowController: NSWindowController,
     NSWindowDelegate,
     NSSpeechSynthesizerDelegate,
     NSTableViewDelegate,
-    NSTableViewDataSource
+    NSTableViewDataSource,
+    NSTextFieldDelegate
 {
     
     @IBOutlet weak var text: NSTextField!
@@ -22,6 +23,8 @@ class MainWindowController: NSWindowController,
 
     let synth = NSSpeechSynthesizer()
     let voices = NSSpeechSynthesizer.availableVoices()
+    let preferences = PreferenceManager()
+    
     var talking : Bool = false {
         didSet {
             update()
@@ -41,10 +44,21 @@ class MainWindowController: NSWindowController,
         
         talking = false
 
-    
         table.delegate = self
         table.dataSource = self
-    }
+        
+        text.delegate = self
+        
+        let defaultVoice = preferences.activeVoice!
+        if let defaultRow = voices.index(of: defaultVoice) {
+            let indices = IndexSet(integer: defaultRow)
+            table.selectRowIndexes(indices, byExtendingSelection: false)
+            table.scrollRowToVisible(defaultRow)
+        }
+        if let str = preferences.activeText {
+            text.stringValue = str
+        }
+     }
     
     
     
@@ -95,11 +109,13 @@ class MainWindowController: NSWindowController,
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         return !talking
     }
+    
     func tableViewSelectionDidChange(_ notification: Notification) {
         
         if let voice = table.dataSource?.tableView?(table, objectValueFor: table.tableColumns[0], row: table.selectedRow) as? String {
             NSLog("Set voice to \(voice)")
             synth.setVoice(voice)
+            preferences.activeVoice = voice
         }
     }
 
@@ -121,6 +137,18 @@ class MainWindowController: NSWindowController,
         }
         return nil
     }
+    
+    // NSTextFieldDelegate ---------------------------------------------
+    
+    override func controlTextDidChange(_ obj: Notification) {
+        
+        if let textField = obj.object as? NSTextField,
+            textField == self.text {
+            preferences.activeText = textField.stringValue
+        }
+        
+    }
+    // end NSTextFieldDelegate -----------------------------------------
     
 
     // NSTableViewDataSource --------------------------------

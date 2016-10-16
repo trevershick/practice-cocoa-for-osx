@@ -122,5 +122,6 @@
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
         </window>
+        <userDefaultsController representsSharedInstance="YES" id="lBR-AI-0Us"/>
     </objects>
 </document>
