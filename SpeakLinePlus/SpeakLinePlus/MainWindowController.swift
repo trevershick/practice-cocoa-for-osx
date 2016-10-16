@@ -55,9 +55,9 @@ class MainWindowController: NSWindowController,
             table.selectRowIndexes(indices, byExtendingSelection: false)
             table.scrollRowToVisible(defaultRow)
         }
-        if let str = preferences.activeText {
-            text.stringValue = str
-        }
+//        if let str = preferences.activeText {
+//            text.stringValue = str
+//        }
      }
     
     
@@ -142,10 +142,10 @@ class MainWindowController: NSWindowController,
     
     override func controlTextDidChange(_ obj: Notification) {
         
-        if let textField = obj.object as? NSTextField,
-            textField == self.text {
-            preferences.activeText = textField.stringValue
-        }
+//        if let textField = obj.object as? NSTextField,
+//            textField == self.text {
+//            preferences.activeText = textField.stringValue
+//        }
         
     }
     // end NSTextFieldDelegate -----------------------------------------
