@@ -12,15 +12,19 @@
 				<string>rsmn</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string></string>
+			<string>myicons</string>
 			<key>CFBundleTypeName</key>
-			<string>DocumentType</string>
+			<string>RaiseMan Worksheet</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>????</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>io.shick.raiseman-doc</string>
+			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
 		</dict>
@@ -49,5 +53,27 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>RaiseMan Worksheet</string>
+			<key>UTTypeIconFile</key>
+			<string>myicons</string>
+			<key>UTTypeIdentifier</key>
+			<string>io.shick.raiseman-doc</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>rsmn</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>

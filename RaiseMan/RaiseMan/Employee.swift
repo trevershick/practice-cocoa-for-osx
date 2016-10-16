@@ -10,10 +10,29 @@ import Foundation
 
 
 
-class Employee : NSObject {
+class Employee : NSObject, NSCoding {
     var name: String? = "New Employee"
     var raise: Float = 0.05
     
+    override init() {
+        super.init()
+    }
+    
+    required init?(coder d: NSCoder) {
+        if let v = d.decodeObject(forKey: "name") as? String {
+            name = v
+        }
+
+        raise = d.decodeFloat(forKey: "raise")
+        super.init()
+    }
+    
+    func encode(with c: NSCoder) {
+        if let v = name {
+            c.encode(v, forKey: "name")
+        }
+        c.encode(raise, forKey: "raise")
+    }
     
 //    override func validateValue(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>, forKey inKey: String) throws {
 //        

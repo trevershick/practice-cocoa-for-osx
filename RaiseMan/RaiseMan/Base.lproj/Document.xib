@@ -7,6 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Document" customModule="RaiseMan" customModuleProvider="target">
             <connections>
+                <outlet property="arrayController" destination="QkJ-an-75v" id="bZX-b3-O3i"/>
+                <outlet property="tableView" destination="sHN-da-APS" id="Ct9-9c-jnt"/>
                 <outlet property="window" destination="xOd-HO-29H" id="JIz-fz-R2o"/>
             </connections>
         </customObject>
@@ -151,7 +153,7 @@
                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                         </buttonCell>
                         <connections>
-                            <action selector="add:" target="QkJ-an-75v" id="eKx-12-UsI"/>
+                            <action selector="addEmployee:" target="-2" id="yux-ul-zBI"/>
                             <binding destination="QkJ-an-75v" name="enabled" keyPath="canAdd" id="Vzw-bT-AZp"/>
                         </connections>
                     </button>

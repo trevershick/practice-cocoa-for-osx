@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D6C7F741DB2F1C800E629C3 /* myicons.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D6C7F731DB2F1C800E629C3 /* myicons.icns */; };
 		7DE4A55F1DB1A56D00A904D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE4A55E1DB1A56D00A904D7 /* AppDelegate.swift */; };
 		7DE4A5611DB1A56D00A904D7 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE4A5601DB1A56D00A904D7 /* Document.swift */; };
 		7DE4A5641DB1A56D00A904D7 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DE4A5621DB1A56D00A904D7 /* Document.xib */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D6C7F731DB2F1C800E629C3 /* myicons.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = myicons.icns; sourceTree = "<group>"; };
 		7DE4A55B1DB1A56D00A904D7 /* RaiseMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RaiseMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DE4A55E1DB1A56D00A904D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7DE4A5601DB1A56D00A904D7 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 		7DE4A55D1DB1A56D00A904D7 /* RaiseMan */ = {
 			isa = PBXGroup;
 			children = (
+				7D6C7F731DB2F1C800E629C3 /* myicons.icns */,
 				7DE4A55E1DB1A56D00A904D7 /* AppDelegate.swift */,
 				7DE4A5601DB1A56D00A904D7 /* Document.swift */,
 				7DE4A5701DB1A60100A904D7 /* Employee.swift */,
@@ -128,6 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DE4A5661DB1A56D00A904D7 /* Assets.xcassets in Resources */,
+				7D6C7F741DB2F1C800E629C3 /* myicons.icns in Resources */,
 				7DE4A5641DB1A56D00A904D7 /* Document.xib in Resources */,
 				7DE4A5691DB1A56D00A904D7 /* MainMenu.xib in Resources */,
 			);
@@ -305,6 +309,7 @@
 				7DE4A56F1DB1A56D00A904D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
