@@ -36,8 +36,8 @@ class Document: NSDocument, NSWindowDelegate {
     
     
     @IBAction func addEmployee(_ sender: NSButton) {
-        let windowController = windowControllers[0]
-        let window = windowController.window!
+//        let windowController = windowControllers[0]
+//        let window = windowController.window!
         
         
         // end the editing session if there is one.  This feels like
@@ -67,6 +67,38 @@ class Document: NSDocument, NSWindowDelegate {
         }
     }
     
+    @IBAction func zeroify(sender : NSButton) {
+        let selectedPeople : [Employee] = arrayController.selectedObjects as! [Employee]
+
+        
+        undoManager?.registerUndo(withTarget: self, handler:  {  (Document) -> () in
+            let oldValues : [Float] = selectedPeople.map({$0.raise})
+            for idx in 0..<oldValues.count {
+                selectedPeople[idx].setValue(oldValues[idx], forKey: "raise")
+            }
+        })
+        if undoManager?.isUndoing == false {
+            undoManager?.setActionName("Zero Out Raises for \(selectedPeople.count) employees.")
+        }
+        selectedPeople.forEach({$0.setValue(0.0, forKey: "raise")})
+    }
+
+    @IBAction func removeEmployees(sender : NSButton) {
+        let selectedPeople : [Employee] = arrayController.selectedObjects as! [Employee]
+        
+        let alert = NSAlert()
+        alert.messageText = "Do you really want to delete these people?"
+        alert.informativeText = "\(selectedPeople.count) will be deleted."
+        alert.addButton(withTitle: "Remove")
+        alert.addButton(withTitle: "Cancel")
+        let window = sender.window!
+        
+        alert.beginSheetModal(for: window, completionHandler: { (response) -> Void in
+            if response == NSAlertFirstButtonReturn {
+                self.arrayController.remove(contentsOf: selectedPeople)
+            }
+        })
+    }
     
     
     // ---------------------------------
