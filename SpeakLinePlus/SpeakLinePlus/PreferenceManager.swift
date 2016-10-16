@@ -32,6 +32,11 @@ class PreferenceManager {
         }
     }
     
+    func reset() {
+        defaults.removeObject(forKey: activeVoiceKey)
+        defaults.removeObject(forKey: activeTextKey)
+    }
+    
     init() {
         registerDefaults()
     }

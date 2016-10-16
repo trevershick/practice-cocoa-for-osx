@@ -12,8 +12,7 @@ class MainWindowController: NSWindowController,
     NSWindowDelegate,
     NSSpeechSynthesizerDelegate,
     NSTableViewDelegate,
-    NSTableViewDataSource,
-    NSTextFieldDelegate
+    NSTableViewDataSource
 {
     
     @IBOutlet weak var text: NSTextField!
@@ -31,8 +30,6 @@ class MainWindowController: NSWindowController,
         }
     }
     
-    
-    
     override var windowNibName: String? {
         return "MainWindowController"
     }
@@ -46,21 +43,28 @@ class MainWindowController: NSWindowController,
 
         table.delegate = self
         table.dataSource = self
-        
-        text.delegate = self
-        
+        updateVoiceTableFromPreferences()
+     }
+    
+    func updateVoiceTableFromPreferences() {
         let defaultVoice = preferences.activeVoice!
         if let defaultRow = voices.index(of: defaultVoice) {
             let indices = IndexSet(integer: defaultRow)
             table.selectRowIndexes(indices, byExtendingSelection: false)
             table.scrollRowToVisible(defaultRow)
         }
-//        if let str = preferences.activeText {
-//            text.stringValue = str
-//        }
-     }
+    }
     
-    
+    @IBAction func onReset(_ sender: AnyObject) {
+        
+        text.window?.makeFirstResponder(nil)
+        
+        
+        window?.windowController?.becomeFirstResponder()
+        
+        preferences.reset()
+        updateVoiceTableFromPreferences()
+    }
     
     @IBAction func onSpeak(_ sender: AnyObject) {
         if (text.stringValue.isEmpty) {
@@ -138,17 +142,7 @@ class MainWindowController: NSWindowController,
         return nil
     }
     
-    // NSTextFieldDelegate ---------------------------------------------
     
-    override func controlTextDidChange(_ obj: Notification) {
-        
-//        if let textField = obj.object as? NSTextField,
-//            textField == self.text {
-//            preferences.activeText = textField.stringValue
-//        }
-        
-    }
-    // end NSTextFieldDelegate -----------------------------------------
     
 
     // NSTableViewDataSource --------------------------------
