@@ -32,7 +32,11 @@
                         </textFieldCell>
                         <connections>
                             <action selector="onSend:" target="-2" id="j1f-er-SK1"/>
-                            <binding destination="-2" name="value" keyPath="self.message" id="Xea-26-5gb"/>
+                            <binding destination="-2" name="value" keyPath="self.message" id="5zK-lw-Zy5">
+                                <dictionary key="options">
+                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                </dictionary>
+                            </binding>
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H7u-sb-LUg">
@@ -44,6 +48,11 @@
                         </buttonCell>
                         <connections>
                             <action selector="onSend:" target="-2" id="VgN-g7-M0m"/>
+                            <binding destination="-2" name="enabled" keyPath="self.message" id="vfR-lQ-elu">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
                         </connections>
                     </button>
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BX1-qd-rLq">
