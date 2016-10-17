@@ -16,21 +16,42 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+            <rect key="contentRect" x="196" y="240" width="482" height="174"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
-            <view key="contentView" wantsLayer="YES" misplaced="YES" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+            <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="482" height="174"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBx-a3-BLP" customClass="DieView" customModule="Dice" customModuleProvider="target">
-                        <rect key="frame" x="123" y="20" width="240" height="240"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="XBx-a3-BLP" userLabel="die1" customClass="DieView" customModule="Dice" customModuleProvider="target">
+                        <rect key="frame" x="20" y="20" width="134" height="134"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="XBx-a3-BLP" secondAttribute="height" multiplier="117:115" id="KgA-hZ-fXN"/>
+                            <constraint firstAttribute="width" secondItem="XBx-a3-BLP" secondAttribute="height" multiplier="1:1" id="1Ne-mj-ebZ"/>
+                            <constraint firstAttribute="width" secondItem="XBx-a3-BLP" secondAttribute="height" multiplier="1:1" id="x0J-GE-CIn"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusFactor">
-                                <real key="value" value="15"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="padding">
+                                <real key="value" value="5"/>
                             </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </customView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="0ec-7X-5bc" userLabel="die2" customClass="DieView" customModule="Dice" customModuleProvider="target">
+                        <rect key="frame" x="174" y="20" width="134" height="134"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="0ec-7X-5bc" secondAttribute="height" multiplier="1:1" id="t03-Ej-H8d"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="padding">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </customView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="G3s-EE-tVs" userLabel="die3" customClass="DieView" customModule="Dice" customModuleProvider="target">
+                        <rect key="frame" x="328" y="20" width="134" height="134"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="G3s-EE-tVs" secondAttribute="height" multiplier="1:1" id="7Pr-Uw-7Pe"/>
+                            <constraint firstAttribute="width" secondItem="G3s-EE-tVs" secondAttribute="height" multiplier="1:1" id="XTG-GP-XXT"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="padding">
                                 <real key="value" value="5"/>
                             </userDefinedRuntimeAttribute>
@@ -38,16 +59,29 @@
                     </customView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="XBx-a3-BLP" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="1Mm-2O-AhK"/>
-                    <constraint firstItem="XBx-a3-BLP" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" id="L7K-sD-klI"/>
-                    <constraint firstAttribute="trailing" secondItem="XBx-a3-BLP" secondAttribute="trailing" constant="20" id="VeS-PW-BVv"/>
-                    <constraint firstAttribute="bottom" secondItem="XBx-a3-BLP" secondAttribute="bottom" constant="20" id="acI-VC-mZb"/>
+                    <constraint firstItem="0ec-7X-5bc" firstAttribute="top" secondItem="XBx-a3-BLP" secondAttribute="top" id="35O-hA-6LW"/>
+                    <constraint firstItem="0ec-7X-5bc" firstAttribute="leading" secondItem="XBx-a3-BLP" secondAttribute="trailing" constant="20" id="ERD-UL-51g"/>
+                    <constraint firstItem="XBx-a3-BLP" firstAttribute="top" secondItem="0ec-7X-5bc" secondAttribute="top" id="Elb-ZH-6a8"/>
+                    <constraint firstItem="0ec-7X-5bc" firstAttribute="top" secondItem="G3s-EE-tVs" secondAttribute="top" id="FwX-fS-FgW"/>
+                    <constraint firstItem="0ec-7X-5bc" firstAttribute="centerY" secondItem="XBx-a3-BLP" secondAttribute="centerY" id="G1g-X9-ohA"/>
+                    <constraint firstItem="0ec-7X-5bc" firstAttribute="bottom" secondItem="XBx-a3-BLP" secondAttribute="bottom" id="GoK-lc-Tgb"/>
+                    <constraint firstItem="G3s-EE-tVs" firstAttribute="centerY" secondItem="XBx-a3-BLP" secondAttribute="centerY" id="LB0-SD-fZK"/>
+                    <constraint firstItem="G3s-EE-tVs" firstAttribute="leading" secondItem="0ec-7X-5bc" secondAttribute="trailing" constant="20" id="Lrh-vV-wxc"/>
+                    <constraint firstItem="XBx-a3-BLP" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="Y74-cr-Xtc"/>
+                    <constraint firstItem="0ec-7X-5bc" firstAttribute="bottom" secondItem="G3s-EE-tVs" secondAttribute="bottom" id="bCG-d1-91R"/>
+                    <constraint firstAttribute="bottom" secondItem="XBx-a3-BLP" secondAttribute="bottom" constant="20" symbolic="YES" id="ghn-Wh-ac1"/>
+                    <constraint firstItem="XBx-a3-BLP" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="gz6-sI-sfJ"/>
+                    <constraint firstItem="G3s-EE-tVs" firstAttribute="top" secondItem="XBx-a3-BLP" secondAttribute="top" id="l1b-v7-bZ4"/>
+                    <constraint firstItem="0ec-7X-5bc" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="s5R-P3-bfP"/>
+                    <constraint firstItem="G3s-EE-tVs" firstAttribute="bottom" secondItem="XBx-a3-BLP" secondAttribute="bottom" id="tD1-GD-BXf"/>
+                    <constraint firstItem="XBx-a3-BLP" firstAttribute="bottom" secondItem="0ec-7X-5bc" secondAttribute="bottom" id="vdT-x7-CW3"/>
+                    <constraint firstAttribute="trailing" secondItem="G3s-EE-tVs" secondAttribute="trailing" constant="20" id="zhM-AR-Deu"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="223" y="-4"/>
+            <point key="canvasLocation" x="234" y="-134"/>
         </window>
     </objects>
 </document>
