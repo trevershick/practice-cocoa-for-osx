@@ -106,8 +106,25 @@ class MainWindowController: NSWindowController,
         
         self.talking = false
         self.update()
+        text.attributedStringValue = NSMutableAttributedString(string: text.stringValue)
     }
     
+    func speechSynthesizer(_ sender: NSSpeechSynthesizer, willSpeakWord characterRange: NSRange, of string: String) {
+        
+        let ms = NSMutableAttributedString(string: string)
+        
+        
+        let font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize(for: text.controlSize))
+        
+        ms.addAttributes([
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: NSColor.red
+            ],
+                         range: characterRange)
+        
+        
+        self.text.attributedStringValue = ms
+    }
     
     // NSTableViewDelegate ----------------------------------
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
