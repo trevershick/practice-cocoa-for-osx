@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController" customModule="Dice" customModuleProvider="target">
             <connections>
+                <outlet property="die2" destination="0ec-7X-5bc" id="OBO-q4-ZdR"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>

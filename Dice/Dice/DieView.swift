@@ -29,6 +29,26 @@ class DieView : NSView {
         }
     }
     
+    @IBAction func saveToPDF(sender: AnyObject!) {
+        let savePanel = NSSavePanel()
+        savePanel.allowedFileTypes = ["pdf"]
+        
+        savePanel.beginSheetModal(for: window!, completionHandler: {
+            [unowned savePanel]
+            (result) -> Void in
+                if result == NSModalResponseOK {
+                    let data = self.dataWithPDF(inside: self.bounds)
+                    var error: NSError?
+                    do {
+                        let ok = try data.write(to: savePanel.url!, options: NSData.WritingOptions.atomic)
+                    } catch let error as NSError {
+                        let alert = NSAlert(error: error)
+                        alert.runModal()
+                    }
+                    
+                }
+            })
+    }
     
     func randomize() {
         intValue = Int(arc4random_uniform(6) + 1)
@@ -76,23 +96,41 @@ class DieView : NSView {
             
             NSBezierPath(ovalIn: dotRect).fill()
         }
-        
-        if [1,3,5].contains(intValue) {
-            drawDot(u: 0.5,v: 0.5)
-        }
-        if (2..<7).contains(intValue) {
-            drawDot(u: 0, v: 1)
-            drawDot(u: 1, v: 0)
+        if (1..<7).contains(intValue) {
             
+            if [1,3,5].contains(intValue) {
+                drawDot(u: 0.5,v: 0.5)
+            }
+            if (2..<7).contains(intValue) {
+                drawDot(u: 0, v: 1)
+                drawDot(u: 1, v: 0)
+                
+            }
+            if (4..<7).contains(intValue) {
+                drawDot(u: 1, v: 1)
+                drawDot(u: 0, v: 0)
+            }
+            if 6 == intValue {
+                drawDot(u: 0, v: 0.5)
+                drawDot(u: 1, v: 0.5)
+            }
+        } else {
+            let paraStyle = NSParagraphStyle.default().mutableCopy() as! NSMutableParagraphStyle
+
+            paraStyle.alignment = .center
+            
+            let font = NSFont.systemFont(ofSize: edgeLength * 0.5)
+            let attrs : [String:Any] = [
+                NSForegroundColorAttributeName : NSColor.black,
+                NSFontAttributeName : font,
+                NSParagraphStyleAttributeName : paraStyle
+            ] as [String : Any]
+            let string : NSString = "\(intValue)" as NSString
+
+            string.drawCentered(in: f, with: attrs)
         }
-        if (4..<7).contains(intValue) {
-            drawDot(u: 1, v: 1)
-            drawDot(u: 0, v: 0)
-        }
-        if 6 == intValue {
-            drawDot(u: 0, v: 0.5)
-            drawDot(u: 1, v: 0.5)
-        }
+
+        
         
     }
     
@@ -188,10 +226,7 @@ class DieView : NSView {
     // this is called by NSControler after interpreting key events
     override func insertText(_ insertString: Any) {
         if let num : Int = Int(insertString as! String) {
-            if (1..<7).contains(num) {
             intValue = num
-            }
-            
         }
     }
 }

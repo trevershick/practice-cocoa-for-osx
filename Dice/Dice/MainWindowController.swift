@@ -10,11 +10,15 @@ import Cocoa
 
 class MainWindowController: NSWindowController {
 
+
+    @IBOutlet weak var die2: DieView!
+    
+    
     override var windowNibName: String? {
         return "MainWindowController"
     }
 
-    
+
     override func windowDidLoad() {
         super.windowDidLoad()
 
