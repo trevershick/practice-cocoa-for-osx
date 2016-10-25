@@ -1,10 +1,3 @@
-//
-//  Document.swift
-//  RaiseMan
-//
-//  Created by Trever Shick on 10/14/16.
-//  Copyright © 2016 Trever Shick. All rights reserved.
-//
 
 import Cocoa
 
@@ -83,7 +76,7 @@ class Document: NSDocument, NSWindowDelegate {
         selectedPeople.forEach({$0.setValue(0.0, forKey: "raise")})
     }
 
-    @IBAction func removeEmployees(sender : NSButton) {
+    @IBAction func removeEmployees(_ sender : AnyObject?) {
         let selectedPeople : [Employee] = arrayController.selectedObjects as! [Employee]
         
         let alert = NSAlert()
@@ -91,13 +84,16 @@ class Document: NSDocument, NSWindowDelegate {
         alert.informativeText = "\(selectedPeople.count) will be deleted."
         alert.addButton(withTitle: "Remove")
         alert.addButton(withTitle: "Cancel")
-        let window = sender.window!
         
-        alert.beginSheetModal(for: window, completionHandler: { (response) -> Void in
-            if response == NSAlertFirstButtonReturn {
-                self.arrayController.remove(contentsOf: selectedPeople)
-            }
-        })
+        
+        if let window = self.windowControllers.first?.window {
+        
+            alert.beginSheetModal(for: window, completionHandler: { (response) -> Void in
+                if response == NSAlertFirstButtonReturn {
+                    self.arrayController.remove(contentsOf: selectedPeople)
+                }
+            })
+        }
     }
     
     

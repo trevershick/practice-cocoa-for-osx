@@ -168,7 +168,7 @@ CA
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="removeEmployeesWithSender:" target="-2" id="e5e-g7-Y7P"/>
+                            <action selector="removeEmployees:" target="-1" id="jfN-gP-Nct"/>
                             <binding destination="QkJ-an-75v" name="enabled" keyPath="canRemove" id="qLZ-V9-vzS"/>
                         </connections>
                     </button>
