@@ -29,6 +29,35 @@ class DieView : NSView {
         }
     }
     
+    func writeToPasteboard(_ pasteboard : NSPasteboard!) {
+        pasteboard.clearContents()
+//        var value : NSString = "\(intValue)"
+        pasteboard.writeObjects(["\(intValue)" as NSString])
+    }
+    
+    func readFromPasteboard(pasteboard: NSPasteboard!) -> Bool {
+        let objects = pasteboard.readObjects(forClasses: [NSString.self], options: [:])
+        
+        if let str = objects?.first as? String,
+            let i = Int(str) {
+
+            intValue = i
+            return true
+        }
+        return false
+    }
+    
+    @IBAction func cut(_ sender: AnyObject?) {
+        copy(sender)
+        intValue = 0
+    }
+    @IBAction func copy(_ sender: AnyObject?) {
+        writeToPasteboard(NSPasteboard.general())
+    }
+    @IBAction func paste(_ sender: AnyObject?) {
+        readFromPasteboard(pasteboard: NSPasteboard.general())
+    }
+    
     @IBAction func saveToPDF(sender: AnyObject!) {
         let savePanel = NSSavePanel()
         savePanel.allowedFileTypes = ["pdf"]
