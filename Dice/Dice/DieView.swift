@@ -10,7 +10,7 @@ import Cocoa
 
 
 @IBDesignable
-class DieView : NSView {
+class DieView : NSView, NSDraggingSource {
     
     @IBInspectable
     var cornerRadiusFactor : Float = 5.0
@@ -18,16 +18,57 @@ class DieView : NSView {
     @IBInspectable
     var padding : Float = 20.0
     
+    var mouseDownEvent : NSEvent?
+    
+    var color : NSColor = NSColor.white {
+        didSet {
+            self.needsDisplay = true
+        }
+    }
+    
+    var numberOfTimesToRoll : Int = 10
+    
     dynamic var intValue : Int = 6 {
         didSet {
             needsDisplay = true
         }
     }
+    
     dynamic var pressed = false {
         didSet {
             needsDisplay = true
         }
     }
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        initialize()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        initialize()
+    }
+    
+    func initialize() {
+        self.register(forDraggedTypes: [NSPasteboardTypeString])
+    }
+    
+    
+    override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+        if sender === self {
+            return NSDragOperation.generic
+        }
+        
+        return .copy
+    }
+    
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        
+        return readFromPasteboard(pasteboard: sender.draggingPasteboard())
+    }
+    
+    
     
     func writeToPasteboard(_ pasteboard : NSPasteboard!) {
         pasteboard.clearContents()
@@ -51,11 +92,25 @@ class DieView : NSView {
         copy(sender)
         intValue = 0
     }
+    
     @IBAction func copy(_ sender: AnyObject?) {
         writeToPasteboard(NSPasteboard.general())
     }
+    
     @IBAction func paste(_ sender: AnyObject?) {
         readFromPasteboard(pasteboard: NSPasteboard.general())
+    }
+    
+    func draggingSession(_ session: NSDraggingSession, endedAt screenPoint: NSPoint, operation: NSDragOperation) {
+        
+        if operation == .delete {
+            intValue = 0
+        }
+    }
+    
+    func draggingSession(_ session: NSDraggingSession, sourceOperationMaskFor context: NSDraggingContext) -> NSDragOperation {
+        
+        return NSDragOperation.copy.union(NSDragOperation.delete)
     }
     
     @IBAction func saveToPDF(sender: AnyObject!) {
@@ -96,6 +151,27 @@ class DieView : NSView {
         return NSSize(width:100, height:100)
     }
     
+    var rollsRemaining : Int = 0
+    
+    func roll() {
+        rollsRemaining = numberOfTimesToRoll
+        
+        Timer.scheduledTimer(timeInterval: 0.15, target: self, selector: #selector(rollTick(sender:)), userInfo: nil, repeats: true)
+        window?.makeFirstResponder(nil)
+    }
+    
+    func rollTick(sender : Timer) {
+        let lastIntValue = intValue
+        while intValue == lastIntValue {
+            randomize()
+        }
+        rollsRemaining = rollsRemaining - 1
+        if rollsRemaining == 0 {
+            sender.invalidate()
+            window?.makeFirstResponder(self)
+        }
+    }
+    
     func drawDieWith(size s : NSSize) {
         let (edgeLength, f) = metricsForSize(size: s)
         let cornerRadius = edgeLength / CGFloat(cornerRadiusFactor)
@@ -111,7 +187,8 @@ class DieView : NSView {
             shadow.set()
         }
         
-        NSColor.white.set()
+        self.color.set()
+
         NSBezierPath(roundedRect: f, xRadius: cornerRadius, yRadius: cornerRadius).fill()
         NSGraphicsContext.restoreGraphicsState()
         
@@ -185,21 +262,56 @@ class DieView : NSView {
         return NSBezierPath(roundedRect: dieFrame, xRadius: cornerRadius, yRadius: cornerRadius).contains(converted)
     }
     
+
+    
     override func mouseUp(with event: NSEvent) {
+        self.mouseDownEvent = nil
         NSLog("mouseUp \(event)")
         pressed = false
         if isInDieFrame(event.locationInWindow) && event.clickCount > 1 {
-            randomize()
+            roll()
         }
     }
     
     override func mouseDown(with event: NSEvent) {
         if isInDieFrame(event.locationInWindow) {
+            self.mouseDownEvent = event
             pressed = true
         }
     }
     override func mouseDragged(with event: NSEvent) {
         NSLog("mouseDragged \(event)")
+        let downPoint = self.mouseDownEvent!.locationInWindow
+        let dragPoint = event.locationInWindow
+        
+        let distanceDragged = hypot(downPoint.x-dragPoint.x,
+                                    downPoint.y-dragPoint.y)
+        if (distanceDragged < 3) {
+            return
+        }
+        
+        pressed = false
+        
+            let imageSize = bounds.size
+            let image = NSImage(size: imageSize, flipped: false, drawingHandler: {(imageBounds) in
+                
+                self.drawDieWith(size: imageSize)
+                return true
+            })
+            
+            let draggingFrameOrigin = convert(downPoint, from:nil)
+            let draggingFrame = NSRect(origin: draggingFrameOrigin, size: imageSize).offsetBy(dx: -imageSize.width/2, dy: -imageSize.height/2)
+
+        let item = NSDraggingItem(pasteboardWriter: NSString(string: "\(intValue)"))
+        
+        item.draggingFrame = draggingFrame
+        item.imageComponentsProvider = {
+            let component = NSDraggingImageComponent(key: NSDraggingImageComponentIconKey)
+            component.contents = image
+            component.frame = NSRect(origin: NSPoint(), size: imageSize)
+            return [component]
+        }
+        beginDraggingSession(with: [item], event: mouseDownEvent!, source: self)
     }
     
     override var acceptsFirstResponder: Bool {
