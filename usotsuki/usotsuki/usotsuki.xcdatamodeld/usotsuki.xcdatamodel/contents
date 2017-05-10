@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G1108" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CombinedEntry" representedClassName=".CombinedEntry" parentEntity="Entry" syncable="YES">
+        <relationship name="includes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Entry" inverseName="usedBy" inverseEntity="Entry" syncable="YES"/>
+    </entity>
+    <entity name="Entry" representedClassName=".Entry" isAbstract="YES" syncable="YES">
+        <attribute name="content" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
+        <attribute name="viewInMenu" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="usedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CombinedEntry" inverseName="includes" inverseEntity="CombinedEntry" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LocalEntry" representedClassName=".LocalEntry" parentEntity="Entry" syncable="YES"/>
+    <entity name="RemoteEntity" representedClassName=".RemoteEntity" parentEntity="Entry" syncable="YES">
+        <attribute name="lastAttempt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lastError" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="updateIntervalMinutes" attributeType="Integer 16" minValueString="1" maxValueString="32767" defaultValueString="60" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CombinedEntry" positionX="-8777" positionY="158" width="128" height="58"/>
+        <element name="Entry" positionX="-8514" positionY="198" width="128" height="105"/>
+        <element name="LocalEntry" positionX="-8541" positionY="72" width="171" height="45"/>
+        <element name="RemoteEntity" positionX="-8640" positionY="333" width="128" height="118"/>
+    </elements>
+</model>
